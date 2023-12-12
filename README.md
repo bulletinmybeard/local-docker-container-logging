@@ -45,20 +45,15 @@ docker-compose --profile fluentd up --build
 ## Demo Applications
 
 ```bash
-docker-compose up -d fluentd-demo-app
-docker-compose up -d logstash-demo-app
 
 docker-compose up fluentd-demo-app
+docker-compose up fluentd-demo-app --build
+
 docker-compose up logstash-demo-app
+docker-compose up logstash-demo-app --build
 
-docker-compose stop fluentd-demo-app
-docker-compose stop logstash-demo-app
-
-docker-compose up --build fluentd-demo-app
-docker-compose up --build logstash-demo-app
-
-docker-compose rm -f fluentd-demo-app
-docker-compose rm -f logstash-demo-app
+docker-compose --profile all up
+docker-compose --profile all up --build
 ```
 
 ```bash
@@ -67,9 +62,6 @@ docker-compose --profile fluentd up
 
 # Run Demo App sending logs to `logstash`
 docker-compose --profile logstash up
-
-# Run both Demo Apps sending logs to `logstash` and `fluentd`
-docker-compose --profile all up
 ```
 
 ## Update your existing `docker-compose.yml` application files
