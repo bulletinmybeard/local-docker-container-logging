@@ -1,14 +1,22 @@
 # Local Logging
 Local Docker Container Logging with Elasticsearch, Kibana, Logstash, and Fluentd.
 
-## The 'Local Logging' stack
+## Table of Contents
+- [Introduction](#introduction)
+- [The Stack](#the-stack)
+- [Running Backups](#running-backups)
+- [Demo Applications](#demo-applications)
+- [License](#license)
+
+## Introduction
 Local logging comes with the log management and data pipeline tools: `fluentd` and `logstash`.
 Depending on the given `--profile` argument, the stack will run Elasticsearch and Kibana,
 together with either `fluentd` (e.g., `docker-compose --profile fluentd up`)
 or `logstash` (e.g., `docker-compose --profile logstash up`).
 
-## Service Configurations
+## The Stack
 Configuration files for all services can be found in the `./docker` directory.
+arm64!!!!!!
 
 ### Elasticsearch
 ### Fluentd
@@ -86,24 +94,26 @@ docker-compose --profile all up
         fluentd-address: "172.30.0.5:24224"
 ```
 
-## Backups Docker Volumes
+## Running Backups
+For backing up data volumes, such as `elasticsearch_data`, we spin up a `busybox` Docker container
+and run the shell script `./backup/volume_backups.sh`. The data is being backed up in the `backup` folder.
+
+
 ```bash
+# Run Docker Container and shell script
 docker-compose run backup
 ```
 
-## Cron Job Setup
-Edit your crontab as follows
+You can run the Docker container periodically by adding the docker-compose command to your crontab.
 ```bash
-crontab -e
-```
-
-```bash
+# Adds execute permission to the shell script
 chmod +x volume_backups.sh
-```
 
-Add a line like this to run the backup daily at a specific time, such as 2 AM:
-```bash
-0 2 * * * /usr/local/bin/docker-compose -f /path/to/your/docker-compose.yml run backup
+# Open your crontab file in edit mode
+crontab -e
+
+# Add a line like this to run the backup daily at a specific time, such as 2 AM:
+0 2 * * * docker-compose -f /path/to/your/docker-compose.yml run backup
 ```
 
 ## License
