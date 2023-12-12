@@ -1,0 +1,5 @@
+- pipeline.id: main
+  path.config: "/usr/share/logstash/pipeline"
+
+- pipeline.id: elasticsearch
+  path.config: "/usr/share/logstash/pipeline/elasticsearch.conf"
