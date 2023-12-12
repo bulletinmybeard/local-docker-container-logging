@@ -1,0 +1,6 @@
+# No build files
+/docker
+/docker-compose*
+
+# Ignore dot files
+/.*
