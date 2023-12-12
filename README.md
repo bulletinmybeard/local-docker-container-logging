@@ -72,7 +72,7 @@ docker-compose --profile logstash up
 docker-compose --profile all up
 ```
 
-## Send Docker container logs to LogDockA
+## Update your existing `docker-compose.yml` application files
 ### For `Logstash` 
 ```bash
     ...
