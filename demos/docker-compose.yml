@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  fluentd-demo-app:
+    build:
+      context: .
+      args:
+        APP_NAME: "${FLUENTD_DEMO_APP_NAME}"
+        APP_SERVER_PORT: "${FLUENTD_DEMO_APP_SERVER_PORT}"
+    restart: unless-stopped
+    ports:
+      - "${FLUENTD_DEMO_APP_SERVER_PORT}:${FLUENTD_DEMO_APP_SERVER_PORT}"
+    logging:
+      driver: fluentd
+      options:
+        tag: "${FLUENTD_DEMO_APP_NAME}-demo-app"
+        fluentd-address: "${FLUENTD_SERVICE_URL}"
+    networks:
+      - elk
+    profiles:
+      - fluentd
+      - all
+
+  logstash-demo-app:
+    build:
+      context: .
+      args:
+        APP_NAME: "${LOGSTASH_DEMO_APP_NAME}"
+        APP_SERVER_PORT: "${LOGSTASH_DEMO_APP_SERVER_PORT}"
+    restart: unless-stopped
+    ports:
+      - "${LOGSTASH_DEMO_APP_SERVER_PORT}:${LOGSTASH_DEMO_APP_SERVER_PORT}"
+    logging:
+      driver: gelf
+      options:
+        tag: "${LOGSTASH_DEMO_APP_NAME}-demo-app"
+        gelf-address: "${LOGSTASH_SERVICE_URL}"
+    networks:
+      - elk
+    profiles:
+      - logstash
+      - all
+
+networks:
+  elk:
+    name: elk
+    external: true
