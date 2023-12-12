@@ -105,4 +105,3 @@ Add a line like this to run the backup daily at a specific time, such as 2 AM:
 ```bash
 0 2 * * * /usr/local/bin/docker-compose -f /path/to/your/docker-compose.yml run backup
 ```
-
